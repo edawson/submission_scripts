@@ -1,0 +1,30 @@
+in_dir="/path/to/files"
+out_dir="/path/to/output"
+seed_dir="/path/to/seedfile"
+
+## Seedfile is a file containing input, one
+## file per line, i.e.:
+## input1.fa
+## input2.fa
+##
+## If you get clever with the cut command it's totally possible to
+use two inputs per line.
+
+SEEDFILE="${seed_dir}/sample_base_names_full.txt"
+sample_name=$(awk "NR==$LSB_JOBINDEX" $SEEDFILE)
+
+
+## Your helper command is a single command
+## (a la "samtools index")
+## or
+## a wrapper script that handles parameter setup and takes a single positional
+## argument.
+## We can imagine my lumpy.sh script looks something like:
+##
+## /home/eric/lumpy -t 12 -i $1 -p -x excludes.tsv
+##
+## and that it outputs to stdout.
+##
+helper_cmd="./lumpy.sh"
+
+${helper_cmd} ${in_dir}/${sample_name}.merged.sorted.bam > ${out_dir}/sample_name.lumpy.txt

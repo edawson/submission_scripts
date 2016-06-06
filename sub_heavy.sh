@@ -13,4 +13,4 @@ bsub -R "rusage[mem=$mem]" -R "span[hosts=1]" \
  -R "select[mem>$mem]" -R "select[cpuf>=8.3] select[sse42] select[type==local]" \
  -m vr-4-1-[01-16] \
  -q long -J "$job_name" -W 23:58 \
- -n $threads -M $mem -eo ~/logs/mod_graph.%J.err.txt -oo ~/logs/mod_graph.%J.out.txt -P analysis-rd ./${job_script}
+ -n $threads -M $mem -eo ~/logs/%I.%J.err.txt -oo ~/logs/%I.%J.out.txt -P analysis-rd ./${job_script}
